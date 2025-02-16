@@ -138,7 +138,7 @@ def execute_function_call(function_call):
                             )
 
 
-@app.post("/run")
+@app.api_route("/run", methods=["GET", "POST"])
 async def run_task(task: str = Query(..., description="Plain-English task description")):
     tools = [convert_function_to_openai_schema(func) for func in function_mappings.values()]
     logging.info(len(tools))

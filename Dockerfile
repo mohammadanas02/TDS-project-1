@@ -52,6 +52,56 @@
 
 # ----------------------------------------------------- #
 
+# # Use a lightweight Debian-based Python image
+# FROM python:3.11-slim
+
+# # Set environment variables
+# ENV PYTHONDONTWRITEBYTECODE=1
+# ENV PYTHONUNBUFFERED=1
+
+# # Set the working directory
+# WORKDIR /app
+
+# # Upgrade pip and install system dependencies
+# RUN pip install --upgrade pip setuptools wheel
+
+# RUN apt-get update && apt-get install -y --no-install-recommends \
+#     gcc \
+#     g++ \
+#     make \
+#     libffi-dev \
+#     musl-dev \
+#     libopenblas-dev \
+#     sqlite3 \
+#     libsqlite3-dev \
+#     libmagic-dev \
+#     tesseract-ocr \
+#     curl \
+#     git \
+#     nodejs \
+#     npm \
+#     && rm -rf /var/lib/apt/lists/*
+
+# # Install Prettier globally
+# RUN npm install -g prettier
+
+# # Copy application files
+# COPY . /app
+
+# # Copy .env file (Make sure your .dockerignore does not exclude it)
+# COPY .env /app/.env
+
+# # Install dependencies
+# RUN pip install uv python-dotenv
+
+# # Expose the application port
+# EXPOSE 8000
+
+# # Run the application
+# CMD ["uv", "run", "main.py"]
+
+# ----------------------------------------------------- #
+
 # Use a lightweight Debian-based Python image
 FROM python:3.11-slim
 
@@ -86,16 +136,17 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN npm install -g prettier
 
 # Copy application files
-COPY app /app
+COPY . /app
 
-# Copy .env file (Make sure your .dockerignore does not exclude it)
+# Ensure .env is copied (Make sure it's not ignored in .dockerignore)
 COPY .env /app/.env
 
-# Install dependencies
+# Install required Python packages
 RUN pip install uv python-dotenv
 
 # Expose the application port
 EXPOSE 8000
 
 # Run the application
-CMD ["uv", "run", "main.py"]
+CMD ["uv", "run", "/app/main.py"]
+
