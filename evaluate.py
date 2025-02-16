@@ -254,7 +254,7 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(description="Evaluate tasks with configurable logging")
-    parser.add_argument("--email", default="22f3000985@ds.study.iitm.ac.in", help="Set the email address") # replaced this user@example.com with my email
+    parser.add_argument("--email", default="22f3000639@ds.study.iitm.ac.in", help="Set the email address") # replaced this user@example.com with my email
     levels = ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
     parser.add_argument("--log-level", default="INFO", choices=levels, help="Set logging level")
     args = parser.parse_args()
